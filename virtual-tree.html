@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NatureShop - Посади дерево</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <style>
+        .tree-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            margin-top: 80px;
+        }
+        
+        .tree-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 2rem;
+        }
+        
+        .tree-option {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .tree-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tree-option.selected {
+            border-color: var(--primary-color);
+            background-color: #e8f5e9;
+        }
+        
+        .tree-option img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+        
+        .tree-option h3 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .tree-option p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .tree-display {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            background-color: #f5f5f6;
+            border-radius: 15px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            background-image: linear-gradient(to bottom, #a5d6a7, #81c784, #66bb6a);
+        }
+        
+        #tree-svg {
+            width: 200px;
+            height: 300px;
+            transition: all 1s ease;
+        }
+        
+        .tree-ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #5d4037;
+        }
+        
+        .tree-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tree-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .tree-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .tree-btn:disabled {
+            background-color: #bdbdbd;
+            cursor: not-allowed;
+        }
+        
+        .tree-info {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            margin-top: 2rem;
+        }
+        
+        .tree-info h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .tree-stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .tree-stat {
+            text-align: center;
+            padding: 1rem;
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            min-width: 150px;
+        }
+        
+        .tree-stat h4 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .tree-stat p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation">
+        <div class="bird bird-3"></div>
+        <div class="leaf leaf-3"></div>
+    </div>
+    
+    <header class="glass-header">
+        <div class="logo">
+            <img src="../images/logo.png" alt="NatureShop">
+            <span>NatureShop</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Главная</a></li>
+                <li><a href="../products/plants.html">Растения</a></li>
+                <li><a href="../products/animals.html">Животные</a></li>
+                <li><a href="../products/accessories.html">Аксессуары</a></li>
+                <li><a href="../products/tools.html">Инструменты</a></li>
+                <li><a href="../gallery.html">Галерея</a></li>
+                <li><a href="virtual-tree.html" class="active">Посади дерево</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <a href="../auth.html" class="login-btn">Войти</a>
+            <a href="../auth.html?register=true" class="register-btn">Регистрация</a>
+        </div>
+    </header>
+
+    <main class="tree-container">
+        <h1>Посади свое виртуальное дерево</h1>
+        <p>Выберите дерево и наблюдайте, как оно растет. Каждое виртуальное дерево - это вклад в реальные посадки.</p>
+        
+        <div class="tree-selection">
+            <div class="tree-option" data-tree="oak">
+                <img src="../images/trees/oak.png" alt="Дуб">
+                <h3>Дуб</h3>
+                <p>Символ силы и долголетия. Живет до 1000 лет.</p>
+            </div>
+            <div class="tree-option" data-tree="birch">
+                <img src="../images/trees/birch.png" alt="Береза">
+                <h3>Береза</h3>
+                <p>Символ России. Красивое и изящное дерево.</p>
+            </div>
+            <div class="tree-option" data-tree="pine">
+                <img src="../images/trees/pine.png" alt="Сосна">
+                <h3>Сосна</h3>
+                <p>Вечнозеленое хвойное дерево с приятным ароматом.</p>
+            </div>
+            <div class="tree-option" data-tree="maple">
+                <img src="../images/trees/maple.png" alt="Клен">
+                <h3>Клен</h3>
+                <p>Известен своими красивыми резными листьями.</p>
+            </div>
+            <div class="tree-option" data-tree="spruce">
+                <img src="../images/trees/spruce.png" alt="Ель">
+                <h3>Ель</h3>
+                <p>Традиционное новогоднее дерево.</p>
+            </div>
+        </div>
+        
+        <div class="tree-display">
+            <div class="tree-ground"></div>
+            <svg id="tree-svg" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Дерево будет отрисовано здесь -->
+            </svg>
+        </div>
+        
+        <div class="tree-controls">
+            <button class="tree-btn" id="plant-btn" disabled>Посадить</button>
+            <button class="tree-btn" id="grow-btn" disabled>Полить</button>
+            <button class="tree-btn" id="fertilize-btn" disabled>Удобрить</button>
+            <button class="tree-btn" id="reset-btn">Сбросить</button>
+        </div>
+        
+        <div class="tree-info">
+            <h3>О вашем дереве</h3>
+            <p>Каждое виртуальное посаженное дерево помогает нам в реальной посадке деревьев по всему миру. 
+               Чем больше вы ухаживаете за своим деревом, тем больше очков получаете, которые можно обменять 
+               на скидки в нашем магазине.</p>
+            
+            <div class="tree-stats">
+                <div class="tree-stat">
+                    <h4>Уровень</h4>
+                    <p id="tree-level">1</p>
+                </div>
+                <div class="tree-stat">
+                    <h4>Очки</h4>
+                    <p id="tree-points">0</p>
+                </div>
+                <div class="tree-stat">
+                    <h4>Здоровье</h4>
+                    <p id="tree-health">100%</p>
+                </div>
+                <div class="tree-stat">
+                    <h4>Возраст</h4>
+                    <p id="tree-age">0 дней</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Магазин</h3>
+                <ul>
+                    <li><a href="../products/plants.html">Растения</a></li>
+                    <li><a href="../products/animals.html">Животные</a></li>
+                    <li><a href="../products/accessories.html">Аксессуары</a></li>
+                    <li><a href="../products/tools.html">Инструменты</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Информация</h3>
+                <ul>
+                    <li><a href="#">О нас</a></li>
+                    <li><a href="#">Доставка и оплата</a></li>
+                    <li><a href="#">Гарантии</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Клуб NatureShop</h3>
+                <ul>
+                    <li><a href="../club.html">Преимущества</a></li>
+                    <li><a href="../club.html">Бонусы</a></li>
+                    <li><a href="../club.html">Как присоединиться</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p>info@natureshop.ru</p>
+                <p>+7 (123) 456-78-90</p>
+                <div class="social-icons">
+                    <a href="#"><img src="../images/social/facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="../images/social/instagram.png" alt="Instagram"></a>
+                    <a href="#"><img src="../images/social/twitter.png" alt="Twitter"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 NatureShop. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="../js/virtual-tree.js"></script>
+</body>
+</html>
