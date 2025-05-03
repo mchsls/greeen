@@ -700,3 +700,52 @@ footer {
     position: relative;
     z-index: 1;
 }
+/* Мобильная галерея */
+@media (max-width: 768px) {
+    .gallery-item-info {
+        transform: none !important;
+        padding: 0.5rem !important;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent) !important;
+    }
+    
+    .gallery-item h3 {
+        font-size: 1rem !important;
+    }
+    
+    .gallery-item p {
+        display: block !important;
+        font-size: 0.8rem !important;
+    }
+    
+    /* Виртуальное дерево */
+    .tree-option {
+        padding: 1rem 0.5rem !important;
+    }
+    
+    .tree-option h3 {
+        font-size: 1rem !important;
+    }
+    
+    .tree-option p {
+        font-size: 0.8rem !important;
+    }
+    
+    .tree-controls {
+        gap: 0.5rem !important;
+    }
+    
+    .tree-btn {
+        padding: 0.6rem !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+/* Уведомления для мобильных */
+.tree-notification, .cart-notification {
+    width: 90% !important;
+    left: 5% !important;
+    transform: none !important;
+    text-align: center;
+    padding: 1rem !important;
+    font-size: 0.9rem;
+}
