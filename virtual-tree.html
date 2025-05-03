@@ -8,35 +8,50 @@
     <link rel="stylesheet" href="../css/animations.css">
     <style>
         .tree-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem;
+            padding: 1rem;
             margin-top: 80px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tree-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .tree-header h1 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+        }
+        
+        .tree-header p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
         }
         
         .tree-selection {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 1.5rem;
-            width: 100%;
-            max-width: 1000px;
             margin-bottom: 2rem;
         }
         
         .tree-option {
             background-color: white;
             border-radius: 10px;
-            padding: 1rem;
+            padding: 1.5rem 1rem;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
             border: 2px solid transparent;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .tree-option:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .tree-option.selected {
@@ -46,7 +61,7 @@
         
         .tree-option img {
             width: 100%;
-            height: 150px;
+            height: 120px;
             object-fit: contain;
             margin-bottom: 1rem;
         }
@@ -61,13 +76,18 @@
             font-size: 0.9rem;
         }
         
+        .tree-display-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
         .tree-display {
             width: 100%;
-            max-width: 600px;
-            height: 400px;
+            max-width: 300px;
+            height: 300px;
             background-color: #f5f5f6;
             border-radius: 15px;
-            margin: 2rem 0;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -77,9 +97,9 @@
         }
         
         #tree-svg {
-            width: 200px;
-            height: 300px;
-            transition: all 1s ease;
+            width: 150px;
+            height: 250px;
+            transition: all 0.5s ease;
         }
         
         .tree-ground {
@@ -92,7 +112,9 @@
         
         .tree-controls {
             display: flex;
+            flex-wrap: wrap;
             gap: 1rem;
+            justify-content: center;
             margin-bottom: 2rem;
         }
         
@@ -105,6 +127,7 @@
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.3s;
+            min-width: 120px;
         }
         
         .tree-btn:hover {
@@ -120,20 +143,25 @@
             background-color: white;
             border-radius: 15px;
             padding: 2rem;
+            margin: 2rem auto;
             max-width: 800px;
-            width: 100%;
-            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
-        .tree-info h3 {
+        .tree-info h2 {
             color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .tree-info p {
             margin-bottom: 1rem;
+            line-height: 1.6;
         }
         
         .tree-stats {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 1rem;
             margin-top: 2rem;
         }
@@ -143,7 +171,6 @@
             padding: 1rem;
             background-color: #e8f5e9;
             border-radius: 10px;
-            min-width: 150px;
         }
         
         .tree-stat h4 {
@@ -154,6 +181,54 @@
         .tree-stat p {
             color: var(--text-secondary);
             font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .tree-selection {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .tree-option img {
+                height: 100px;
+            }
+            
+            .tree-display {
+                height: 250px;
+            }
+            
+            #tree-svg {
+                width: 120px;
+                height: 200px;
+            }
+            
+            .tree-controls {
+                gap: 0.5rem;
+            }
+            
+            .tree-btn {
+                padding: 0.6rem 1rem;
+                min-width: 100px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tree-container {
+                padding: 0.5rem;
+            }
+            
+            .tree-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tree-selection {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .tree-stats {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
@@ -171,11 +246,10 @@
         <nav>
             <ul>
                 <li><a href="../index.html">Главная</a></li>
-                <li><a href="../products/plants.html">Растения</a></li>
-                <li><a href="../products/animals.html">Животные</a></li>
-                <li><a href="../products/accessories.html">Аксессуары</a></li>
-                <li><a href="../products/tools.html">Инструменты</a></li>
-                <li><a href="../gallery.html">Галерея</a></li>
+                <li><a href="../gallery.html?category=plants">Растения</a></li>
+                <li><a href="../gallery.html?category=animals">Животные</a></li>
+                <li><a href="../gallery.html?category=accessories">Аксессуары</a></li>
+                <li><a href="../gallery.html?category=tools">Инструменты</a></li>
                 <li><a href="virtual-tree.html" class="active">Посади дерево</a></li>
             </ul>
         </nav>
@@ -186,53 +260,57 @@
     </header>
 
     <main class="tree-container">
-        <h1>Посади свое виртуальное дерево</h1>
-        <p>Выберите дерево и наблюдайте, как оно растет. Каждое виртуальное дерево - это вклад в реальные посадки.</p>
+        <div class="tree-header">
+            <h1>Посади свое виртуальное дерево</h1>
+            <p>Выберите дерево и наблюдайте, как оно растет. Каждое виртуальное дерево - это вклад в реальные посадки.</p>
+        </div>
         
         <div class="tree-selection">
             <div class="tree-option" data-tree="oak">
                 <img src="../images/trees/oak.png" alt="Дуб">
                 <h3>Дуб</h3>
-                <p>Символ силы и долголетия. Живет до 1000 лет.</p>
+                <p>Символ силы и долголетия</p>
             </div>
             <div class="tree-option" data-tree="birch">
                 <img src="../images/trees/birch.png" alt="Береза">
                 <h3>Береза</h3>
-                <p>Символ России. Красивое и изящное дерево.</p>
+                <p>Символ России</p>
             </div>
             <div class="tree-option" data-tree="pine">
                 <img src="../images/trees/pine.png" alt="Сосна">
                 <h3>Сосна</h3>
-                <p>Вечнозеленое хвойное дерево с приятным ароматом.</p>
+                <p>Вечнозеленое хвойное дерево</p>
             </div>
             <div class="tree-option" data-tree="maple">
                 <img src="../images/trees/maple.png" alt="Клен">
                 <h3>Клен</h3>
-                <p>Известен своими красивыми резными листьями.</p>
+                <p>Красивые резные листья</p>
             </div>
             <div class="tree-option" data-tree="spruce">
                 <img src="../images/trees/spruce.png" alt="Ель">
                 <h3>Ель</h3>
-                <p>Традиционное новогоднее дерево.</p>
+                <p>Традиционное новогоднее дерево</p>
             </div>
         </div>
         
-        <div class="tree-display">
-            <div class="tree-ground"></div>
-            <svg id="tree-svg" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
-                <!-- Дерево будет отрисовано здесь -->
-            </svg>
+        <div class="tree-display-container">
+            <div class="tree-display">
+                <div class="tree-ground"></div>
+                <svg id="tree-svg" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Дерево будет отрисовано здесь -->
+                </svg>
+            </div>
         </div>
         
         <div class="tree-controls">
-            <button class="tree-btn" id="plant-btn" disabled>Посадить</button>
+            <button class="tree-btn" id="plant-btn">Посадить</button>
             <button class="tree-btn" id="grow-btn" disabled>Полить</button>
             <button class="tree-btn" id="fertilize-btn" disabled>Удобрить</button>
             <button class="tree-btn" id="reset-btn">Сбросить</button>
         </div>
         
         <div class="tree-info">
-            <h3>О вашем дереве</h3>
+            <h2>О вашем дереве</h2>
             <p>Каждое виртуальное посаженное дерево помогает нам в реальной посадке деревьев по всему миру. 
                Чем больше вы ухаживаете за своим деревом, тем больше очков получаете, которые можно обменять 
                на скидки в нашем магазине.</p>
@@ -263,10 +341,10 @@
             <div class="footer-section">
                 <h3>Магазин</h3>
                 <ul>
-                    <li><a href="../products/plants.html">Растения</a></li>
-                    <li><a href="../products/animals.html">Животные</a></li>
-                    <li><a href="../products/accessories.html">Аксессуары</a></li>
-                    <li><a href="../products/tools.html">Инструменты</a></li>
+                    <li><a href="../gallery.html?category=plants">Растения</a></li>
+                    <li><a href="../gallery.html?category=animals">Животные</a></li>
+                    <li><a href="../gallery.html?category=accessories">Аксессуары</a></li>
+                    <li><a href="../gallery.html?category=tools">Инструменты</a></li>
                 </ul>
             </div>
             <div class="footer-section">
