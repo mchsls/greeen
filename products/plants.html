@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NatureShop - Растения</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <style>
+        .products-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background-image: linear-gradient(to right, rgba(46, 125, 50, 0.8), rgba(104, 159, 56, 0.8)), url('../images/plants-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .products-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .products-header p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .products-container {
+            padding: 0 2rem 3rem;
+        }
+        
+        .product-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+        
+        .category-tab {
+            padding: 0.7rem 1.5rem;
+            background-color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--primary-light);
+        }
+        
+        .category-tab:hover, .category-tab.active {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: var(--accent-color);
+            color: var(--text-primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .product-category {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin: 0.5rem 0;
+        }
+        
+        .product-old-price {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-decoration: line-through;
+            margin-right: 0.5rem;
+        }
+        
+        .product-rating {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .add-to-cart {
+            display: block;
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .products-description {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .products-description h2 {
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .products-description p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .products-header h1 {
+                font-size: 2rem;
+            }
+            
+            .products-header p {
+                font-size: 1rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation">
+        <div class="bird bird-5"></div>
+        <div class="leaf leaf-6"></div>
+    </div>
+    
+    <header class="glass-header">
+        <div class="logo">
+            <img src="../images/logo.png" alt="NatureShop">
+            <span>NatureShop</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Главная</a></li>
+                <li><a href="plants.html" class="active">Растения</a></li>
+                <li><a href="animals.html">Животные</a></li>
+                <li><a href="accessories.html">Аксессуары</a></li>
+                <li><a href="tools.html">Инструменты</a></li>
+                <li><a href="../gallery.html">Галерея</a></li>
+                <li><a href="../virtual-tree.html">Посади дерево</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <a href="../auth.html" class="login-btn">Войти</a>
+            <a href="../auth.html?register=true" class="register-btn">Регистрация</a>
+        </div>
+    </header>
+
+    <div class="products-header">
+        <h1>Растения</h1>
+        <p>Откройте для себя наш огромный ассортимент растений для дома и сада. Хвойные, цветущие, комнатные и экзотические растения - все для вашего зеленого уголка.</p>
+    </div>
+
+    <div class="products-container">
+        <div class="product-categories">
+            <div class="category-tab active" data-category="all">Все растения</div>
+            <div class="category-tab" data-category="coniferous">Хвойные</div>
+            <div class="category-tab" data-category="flowering">Цветущие</div>
+            <div class="category-tab" data-category="indoor">Комнатные</div>
+            <div class="category-tab" data-category="exotic">Экзотические</div>
+            <div class="category-tab" data-category="sale">Распродажа</div>
+        </div>
+        
+        <div class="products-grid" id="products-grid">
+            <!-- Товары будут загружены через JavaScript -->
+        </div>
+        
+        <div class="products-description">
+            <h2>Наши растения</h2>
+            <p>В нашем магазине представлен широкий ассортимент растений для любого вкуса и уровня подготовки садовода. Мы тщательно отбираем каждого зеленого питомца, чтобы вы получили только здоровые и качественные растения.</p>
+            
+            <h3>Хвойные растения</h3>
+            <p>Хвойные растения - это основа любого сада. Они радуют глаз круглый год, очищают воздух и создают уютную атмосферу. В нашем ассортименте представлены различные виды елей, сосен, пихт, туй и можжевельников. Особое внимание уделено голубым елям, которые становятся настоящим украшением участка.</p>
+            
+            <h3>Цветущие растения</h3>
+            <p>Цветы - это праздник для души. Мы предлагаем как однолетние, так и многолетние цветущие растения, которые будут радовать вас яркими красками с ранней весны до поздней осени. Розы, пионы, лилии, гортензии - выбирайте на свой вкус!</p>
+            
+            <h3>Комнатные растения</h3>
+            <p>Комнатные растения создают уют в доме, очищают воздух и поднимают настроение. У нас вы найдете как классические фикусы и фиалки, так и модные монстеры, замиокулькасы и орхидеи. Для каждого растения мы предоставляем подробную инструкцию по уходу.</p>
+            
+            <h3>Экзотические растения</h3>
+            <p>Для ценителей необычного у нас есть коллекция экзотических растений: цитрусовые деревья, кофейные кусты, банановые растения и даже хищные растения. Эти зеленые экзоты станут изюминкой вашей коллекции.</p>
+            
+            <h3>Гарантия качества</h3>
+            <p>Все наши растения проходят тщательный контроль качества перед отправкой. Мы гарантируем соответствие сорту, здоровье растений и бережную упаковку при доставке. При необходимости наши консультанты всегда готовы помочь с выбором и дать советы по уходу.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Магазин</h3>
+                <ul>
+                    <li><a href="plants.html">Растения</a></li>
+                    <li><a href="animals.html">Животные</a></li>
+                    <li><a href="accessories.html">Аксессуары</a></li>
+                    <li><a href="tools.html">Инструменты</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Информация</h3>
+                <ul>
+                    <li><a href="#">О нас</a></li>
+                    <li><a href="#">Доставка и оплата</a></li>
+                    <li><a href="#">Гарантии</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Клуб NatureShop</h3>
+                <ul>
+                    <li><a href="../club.html">Преимущества</a></li>
+                    <li><a href="../club.html">Бонусы</a></li>
+                    <li><a href="../club.html">Как присоединиться</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p>info@natureshop.ru</p>
+                <p>+7 (123) 456-78-90</p>
+                <div class="social-icons">
+                    <a href="#"><img src="../images/social/facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="../images/social/instagram.png" alt="Instagram"></a>
+                    <a href="#"><img src="../images/social/twitter.png" alt="Twitter"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 NatureShop. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загрузка товаров
+            loadProducts();
+            
+            // Инициализация фильтров
+            initCategoryFilters();
+        });
+        
+        function loadProducts() {
+            const productsGrid = document.getElementById('products-grid');
+            
+            // Здесь обычно будет AJAX запрос к серверу, но для примера используем мок данные
+            const products = [
+                {
+                    id: 101,
+                    name: 'Ель голубая',
+                    category: 'coniferous',
+                    price: '4 990 ₽',
+                    oldPrice: '5 990 ₽',
+                    rating: '★★★★★',
+                    image: '../images/products/blue-spruce.jpg',
+                    description: 'Прекрасная голубая ель для вашего сада. Морозоустойчива, неприхотлива в уходе. Высота саженца 1.2м.',
+                    isNew: true,
+                    isSale: false
+                },
+                {
+                    id: 102,
+                    name: 'Орхидея Фаленопсис',
+                    category: 'indoor',
+                    price: '1 290 ₽',
+                    oldPrice: '',
+                    rating: '★★★★☆',
+                    image: '../images/products/orchid.jpg',
+                    description: 'Нежная орхидея с продолжительным периодом цветения. Идеально для подарка. Высота 45см.',
+                    isNew: false,
+                    isSale: false
+                },
+                {
+                    id: 103,
+                    name: 'Саженцы туи',
+                    category: 'coniferous',
+                    price: '1 990 ₽',
+                    oldPrice: '2 490 ₽',
+                    rating: '★★★★★',
+                    image: '../images/products/thuja.jpg',
+                    description: 'Набор из 5 саженцев туи для живой изгороди. Высота 40-50см. Морозоустойчивые.',
+                    isNew: false,
+                    isSale: true
+                },
+                {
+                    id: 104,
+                    name: 'Бонсай Фикус',
+                    category: 'exotic',
+                    price: '6 990 ₽',
+                    oldPrice: '',
+                    rating: '★★★★★',
+                    image: '../images/products/bonsai.jpg',
+                    description: 'Искусственно сформированный бонсай из фикуса. Возраст 5 лет. Высота 35см.',
+                    isNew: true,
+                    isSale: false
+                },
+                {
+                    id: 105,
+                    name: 'Роза кустовая',
+                    category: 'flowering',
+                    price: '1 490 ₽',
+                    oldPrice: '1 990 ₽',
+                    rating: '★★★★☆',
+                    image: '../images/products/rose.jpg',
+                    description: 'Кустовая роза с крупными цветами. Высота 60см. Цветение с июня по сентябрь.',
+                    isNew: false,
+                    isSale: true
+                },
+                {
+                    id: 106,
+                    name: 'Монстера',
+                    category: 'indoor',
+                    price: '3 490 ₽',
+                    oldPrice: '',
+                    rating: '★★★★★',
+                    image: '../images/products/monstera.jpg',
+                    description: 'Популярное комнатное растение с крупными резными листьями. Высота 70см.',
+                    isNew: true,
+                    isSale: false
+                },
+                {
+                    id: 107,
+                    name: 'Сосна горная',
+                    category: 'coniferous',
+                    price: '3 990 ₽',
+                    oldPrice: '',
+                    rating: '★★★★☆',
+                    image: '../images/products/pine.jpg',
+                    description: 'Горная сосна для альпийских горок и рокариев. Высота 50см. Возраст 3 года.',
+                    isNew: false,
+                    isSale: false
+                },
+                {
+                    id: 108,
+                    name: 'Гортензия',
+                    category: 'flowering',
+                    price: '2 290 ₽',
+                    oldPrice: '2 790 ₽',
+                    rating: '★★★★★',
+                    image: '../images/products/hydrangea.jpg',
+                    description: 'Куст гортензии с крупными шаровидными соцветиями. Высота 40см.',
+                    isNew: false,
+                    isSale: true
+                }
+            ];
+            
+            renderProducts(products);
+        }
+        
+        function renderProducts(products) {
+            const productsGrid = document.getElementById('products-grid');
+            productsGrid.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = `product-card ${product.category}`;
+                if (product.isSale) productCard.classList.add('sale');
+                
+                let badge = '';
+                if (product.isNew) {
+                    badge = '<div class="product-badge">Новинка</div>';
+                } else if (product.isSale) {
+                    badge = '<div class="product-badge">Распродажа</div>';
+                }
+                
+                let oldPrice = '';
+                if (product.oldPrice) {
+                    oldPrice = `<span class="product-old-price">${product.oldPrice}</span>`;
+                }
+                
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        ${badge}
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">${getCategoryName(product.category)}</span>
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-rating">${product.rating}</div>
+                        <div class="product-price">${oldPrice}${product.price}</div>
+                        <button class="add-to-cart" data-id="${product.id}">В корзину</button>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+            
+            // Добавляем обработчики событий для кнопок "В корзину"
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    addToCart(productId);
+                    showCartNotification();
+                });
+            });
+        }
+        
+        function getCategoryName(category) {
+            const categories = {
+                'coniferous': 'Хвойные',
+                'flowering': 'Цветущие',
+                'indoor': 'Комнатные',
+                'exotic': 'Экзотические'
+            };
+            return categories[category] || category;
+        }
+        
+        function initCategoryFilters() {
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Удаляем активный класс у всех вкладок
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущей вкладке
+                    this.classList.add('active');
+                    
+                    // Получаем категорию для фильтрации
+                    const category = this.getAttribute('data-category');
+                    
+                    // Применяем фильтр
+                    filterProducts(category);
+                });
+            });
+        }
+        
+        function filterProducts(category) {
+            const productCards = document.querySelectorAll('.product-card');
+            
+            productCards.forEach(card => {
+                card.style.display = 'none';
+                
+                if (category === 'all' || 
+                    card.classList.contains(category) || 
+                    (category === 'sale' && card.classList.contains('sale'))) {
+                    card.style.display = 'block';
+                }
+            });
+        }
+        
+        function addToCart(productId) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCounter();
+        }
+        
+        function updateCartCounter() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const counter = document.querySelector('.cart-counter');
+            if (counter) {
+                counter.textContent = cart.length;
+            }
+        }
+        
+        function showCartNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'cart-notification';
+            notification.textContent = 'Товар добавлен в корзину!';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
